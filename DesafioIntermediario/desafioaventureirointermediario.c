@@ -176,10 +176,10 @@ int main (){
     printf("5. Densidade demográfica\n");
     scanf("%d", &atributo);
 
-    if(atributo < 1 || atributo > 5){
+    /*if(atributo < 1 || atributo > 5){
         printf("Você digitou uma opção inválida!\n");
         return 1;
-    }
+    }*/
 
     switch (atributo)
     {
@@ -259,6 +259,7 @@ int main (){
         break;
 
     default:
+        printf("Você digitou uma opção inválida!\n");
         break;
     }
 
