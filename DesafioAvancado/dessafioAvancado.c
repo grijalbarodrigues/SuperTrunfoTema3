@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main (){
     
@@ -16,10 +17,12 @@ int main (){
     scanf(" %c", &estado1);
 
     printf("Digite o código da carta: \n");
-    scanf("%s", codigo1);
+    fgets(codigo1, sizeof(codigo1), stdin);
+    codigo1[strcspn(codigo1, "\\n")] = '\\0'; // Remove a quebra de linha
 
     printf("Digite o nome da cidade: \n");
-    scanf(" %19[^\n]", cidade1);
+    fgets(cidade1, sizeof(cidade1), stdin);
+    cidade1[strcspn(cidade1, "\\n")] = '\\0';// Remove a quebra de linha
 
     printf("Digite a população desta cidade: \n");
     scanf("%lu", &populacao1);
@@ -53,7 +56,7 @@ int main (){
     }
 
     //ajuste para o SuperPoder1:
-    float inversoDensidade1 = 1.0f/densidade1;
+    float inversoDensidade1 = 0.0f/densidade1; // inicia com valor padrao zero
     
     if (densidade1 != 0.0f){
         inversoDensidade1 = 1.0f/densidade1;
@@ -68,7 +71,7 @@ int main (){
 
 
      //variaveis da carta 2
-    char estado2, codigo2[4], cidade2[20];
+    char estado2, codigo2[5], cidade2[20];
     unsigned long int populacao2;
     float area2, pib2, densidade2, pibpercapita2;
     int pontoturistico2;
@@ -81,10 +84,12 @@ int main (){
     scanf(" %c", &estado2);
 
     printf("Digite o código da carta: \n");
-    scanf("%s", codigo2);
+    fgets(codigo2, sizeof(codigo2), stdin);
+    codigo2[strcspn(codigo1, "\\n")] = '\\0'; // Remove a quebra de linha
 
     printf("Digite o nome da cidade: \n");
-    scanf(" %19[^\n]", cidade2);
+    fgets(cidade2, sizeof(cidade2), stdin);
+    cidade2[strcspn(cidade1, "\\n")] = '\\0';// Remove a quebra de linha
 
     printf("Digite a população desta cidade: \n");
     scanf("%lu", &populacao2);
@@ -118,7 +123,7 @@ int main (){
     }
 
     //ajuste para o SuperPoder2:
-    float inversoDensidade2 = 1.0f/densidade2;
+    float inversoDensidade2 = 0.0f/densidade2;// inicia com valor padrao zero
     
     if (densidade2 != 0.0f){
         inversoDensidade2 = 1.0f/densidade2;
@@ -133,6 +138,8 @@ int main (){
 //###############CODIGO DESAFIO NIVEL MESTRE:
     int atributo1, atributo2;
     int batalha1, batalha2;
+    float batalhaTotal1, batalhaTotal2;
+    
     
 
     printf("***BEM-VINDO AO JOGO***\n");
@@ -217,12 +224,90 @@ int main (){
         break;
     }
 
-        if (batalha1 ==1 && batalha2 == 1){//GANHA NOS DOIS ATRIBUTUOS            
+        printf("*** Cidade %s vs Cidade %s ***\n", cidade1, cidade2);
+        if (batalha1 ==1 && batalha2 ==1){//GANHA NOS DOIS ATRIBUTUOS 
             printf("A Carta 1 venceu nos 2 atributos escolhidos.\n");
-        }else if (batalha1 =! batalha2){//PERDE EM UM E GANHA EM OUTRO
-            printf("Jogo empatou!\n");
+                switch (atributo1){
+                case 1: printf("POPULAÇÃO - Cidade 1: %d habitantes.\n", populacao1);
+                        printf("POPULAÇÃO - Cidade 2: %d habitantes.\n", populacao2); break;
+                        
+                case 2: printf("ÁREA - Cidade 1: %.2f km².\n", area1); 
+                        printf("ÁREA - Cidade 2: %.2f km².\n", area2); break;
+                case 3: printf("PIB - Cidade 1: %.2f bilhões de reais.\n", pib1); 
+                        printf("PIB - Cidade 2: %.2f bilhões de reais.\n", pib2); break;
+                case 4: printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 1: %d pontos turísticos.\n", pontoturistico1); 
+                        printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 2: %d pontos turísticos.\n", pontoturistico2); break;
+                case 5: printf("DENSIDADE DEMOGRÁFICA - Cidade 1: %.2f hab./km².\n", densidade1); 
+                        printf("DENSIDADE DEMOGRÁFICA - Cidade 2: %.2f hab./km².\n", densidade2); break;
+                }
+
+                switch (atributo2){
+                case 1: printf("POPULAÇÃO - Cidade 1: %d habitantes.\n", populacao1); 
+                        printf("POPULAÇÃO - Cidade 2: %d habitantes.\n", populacao2); break;
+                case 2: printf("ÁREA - Cidade 1: %.2f km².\n", area1); 
+                        printf("ÁREA - Cidade 2: %.2f km².\n", area2); break;
+                case 3: printf("PIB - Cidade 1: %.2f bilhões de reais.\n", pib1); 
+                        printf("PIB - Cidade 2: %.2f bilhões de reais.\n", pib2); break;
+                case 4: printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 1: %d pontos turísticos.\n", pontoturistico1);
+                        printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 2: %d pontos turísticos.\n", pontoturistico2); break;
+                case 5: printf("DENSIDADE DEMOGRÁFICA - Cidade 1: %.2f hab./km².\n", densidade1); 
+                        printf("DENSIDADE DEMOGRÁFICA - Cidade 2: %.2f hab./km².\n", densidade2); break;
+                }
+        }else if  (batalha1 =! batalha2){//PERDE EM UM E GANHA EM OUTRO
+            printf("Jogo empatou! Cada carta venceu um  atributo.\n");
+                switch (atributo1){
+                case 1: printf("POPULAÇÃO - Cidade 1: %d habitantes.\n", populacao1);
+                        printf("POPULAÇÃO - Cidade 2: %d habitantes.\n", populacao2); break;
+                case 2: printf("ÁREA - Cidade 1: %.2f km².\n", area1); 
+                        printf("ÁREA - Cidade 2: %.2f km².\n", area2); break;
+                case 3: printf("PIB - Cidade 1: %.2f bilhões de reais.\n", pib1); 
+                        printf("PIB - Cidade 2: %.2f bilhões de reais.\n", pib2); break;
+                case 4: printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 1: %d pontos turísticos.\n", pontoturistico1); 
+                        printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 2: %d pontos turísticos.\n", pontoturistico2); break;
+                case 5: printf("DENSIDADE DEMOGRÁFICA - Cidade 1: %.2f hab./km².\n", densidade1); 
+                        printf("DENSIDADE DEMOGRÁFICA - Cidade 2: %.2f hab./km².\n", densidade2); break;
+                }
+
+                switch (atributo2){
+                case 1: printf("POPULAÇÃO - Cidade 1: %d habitantes.\n", populacao1); 
+                        printf("POPULAÇÃO - Cidade 2: %d habitantes.\n", populacao2); break;
+                case 2: printf("ÁREA - Cidade 1: %.2f km².\n", area1); 
+                        printf("ÁREA - Cidade 2: %.2f km².\n", area2); break;
+                case 3: printf("PIB - Cidade 1: %.2f bilhões de reais.\n", pib1); 
+                        printf("PIB - Cidade 2: %.2f bilhões de reais.\n", pib2); break;
+                case 4: printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 1: %d pontos turísticos.\n", pontoturistico1);
+                        printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 2: %d pontos turísticos.\n", pontoturistico2); break;
+                case 5: printf("DENSIDADE DEMOGRÁFICA - Cidade 1: %.2f hab./km².\n", densidade1); 
+                        printf("DENSIDADE DEMOGRÁFICA - Cidade 2: %.2f hab./km².\n", densidade2); break;
+                }
         }else{//PERDE NOS DOIS
-            printf("Você perdeu nos dois atributos escolhidos!");
+            printf("A Carta 1 perdeu nos dois atributos escolhidos!\n");
+                switch (atributo1){
+                case 1: printf("POPULAÇÃO - Cidade 1: %d habitantes.\n", populacao1);
+                        printf("POPULAÇÃO - Cidade 2: %d habitantes.\n", populacao2); break;
+                case 2: printf("ÁREA - Cidade 1: %.2f km².\n", area1); 
+                        printf("ÁREA - Cidade 2: %.2f km².\n", area2); break;
+                case 3: printf("PIB - Cidade 1: %.2f bilhões de reais.\n", pib1); 
+                        printf("PIB - Cidade 2: %.2f bilhões de reais.\n", pib2); break;
+                case 4: printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 1: %d pontos turísticos.\n", pontoturistico1); 
+                        printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 2: %d pontos turísticos.\n", pontoturistico2); break;
+                case 5: printf("DENSIDADE DEMOGRÁFICA - Cidade 1: %.2f hab./km².\n", densidade1); 
+                        printf("DENSIDADE DEMOGRÁFICA - Cidade 2: %.2f hab./km².\n", densidade2); break;
+                }
+
+                switch (atributo2){
+                case 1: printf("POPULAÇÃO - Cidade 1: %d habitantes.\n", populacao1); 
+                        printf("POPULAÇÃO - Cidade 2: %d habitantes.\n", populacao2); break;
+                        
+                case 2: printf("ÁREA - Cidade 1: %.2f km².\n", area1); 
+                        printf("ÁREA - Cidade 2: %.2f km².\n", area2); break;
+                case 3: printf("PIB - Cidade 1: %.2f bilhões de reais.\n", pib1); 
+                        printf("PIB - Cidade 2: %.2f bilhões de reais.\n", pib2); break;
+                case 4: printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 1: %d pontos turísticos.\n", pontoturistico1);
+                        printf("NÚMERO DE PONTOS TURÍSTICOS - Cidade 2: %d pontos turísticos.\n", pontoturistico2); break;
+                case 5: printf("DENSIDADE DEMOGRÁFICA - Cidade 1: %.2f hab./km².\n", densidade1); 
+                        printf("DENSIDADE DEMOGRÁFICA - Cidade 2: %.2f hab./km².\n", densidade2); break;
+                }
         }
     return 0;
 }}
